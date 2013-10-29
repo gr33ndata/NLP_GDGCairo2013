@@ -1,4 +1,15 @@
-NLP_GDGCairo2013
-================
+NLP at GDG Cairo2013
+=====================
 
-Code used in my presentation in GDG Cairo about Natural Language Processing in Python
+This github repository contains the code used in my presentation in GDG Cairo about Natural Language Processing in Python.
+
+Prerequisites
+==============
+
+Before running the code here, you need to make sure you have the following libraries installed, after making sure that you already have the `Python programming language <http://www.python.org/>`_ installed on your computer::
+
+* Natural Language Toolkit `NLTK <http://nltk.org/>`_ 
+* Machine learning in Python `Scikit-Learn <http://scikit-learn.org>`_
+
+
+
