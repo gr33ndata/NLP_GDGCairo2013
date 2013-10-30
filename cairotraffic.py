@@ -30,23 +30,27 @@ class CairoTraffic:
     def print_debug(self, message):
         if self.debug:
             print message
-        
+    
+    def parse_tweet(self, tweet):
+        traffic_tweet = {
+            'from': [],
+            'to': []
+        }
+        for tagged_token in tweet['tokens']:
+            self.print_debug('\tTagged token:' + str(tagged_token))
+            if tagged_token[1] == 'FROM':
+                traffic_tweet['from'].append(tagged_token[0])
+            elif tagged_token[1] == 'TO':
+                traffic_tweet['to'].append(tagged_token[0])
+            else:
+                pass
+        return traffic_tweet
+            
     def show_traffic(self):
         for tweet in self.data:
             self.print_debug('\nTweet:\n')
-            traffic = {
-                'from': [],
-                'to': []
-            }
-            for tagged_token in tweet['tokens']:
-                self.print_debug('\tTagged token:' + str(tagged_token))
-                if tagged_token[1] == 'FROM':
-                   traffic['from'].append(tagged_token[0])
-                elif tagged_token[1] == 'TO':
-                   traffic['to'].append(tagged_token[0])
-                else:
-                    pass
-            print ' '.join(traffic['from']), '=>', ' '.join(traffic['to']), ' STATUS:', tweet['sentiment']
+            traffic_tweet = self.parse_tweet(tweet)
+            print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', tweet['sentiment']
             self.print_debug('\n')
         
 
