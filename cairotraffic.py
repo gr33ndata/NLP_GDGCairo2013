@@ -12,6 +12,12 @@ class CairoTraffic:
         #print self.data
     
     def load(self):
+        ''' Loads tweet fromm filein
+            Then converts it into the following structure
+                tokens: [], sentiment: za7ma
+            @tokens: a listt of tuples, (word, pos)
+            @sentiment: za7ma foll etc        
+        '''
         with open(self.filein,'r') as fdin:
             for line in fdin.readlines():
                 tagged_tokenz = []
@@ -32,9 +38,13 @@ class CairoTraffic:
             print message
     
     def parse_tweet(self, tweet):
+        ''' Returns the following structure
+            from: [],to: [],sentiment: tweet[sentiment]
+        '''
         traffic_tweet = {
             'from': [],
-            'to': []
+            'to': [],
+            'sentiment': tweet['sentiment']
         }
         for tagged_token in tweet['tokens']:
             self.print_debug('\tTagged token:' + str(tagged_token))
@@ -47,10 +57,12 @@ class CairoTraffic:
         return traffic_tweet
             
     def show_traffic(self):
+        ''' Displays the loaded file in the form of From => To and Status
+        '''
         for tweet in self.data:
             self.print_debug('\nTweet:\n')
             traffic_tweet = self.parse_tweet(tweet)
-            print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', tweet['sentiment']
+            print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', traffic_tweet['sentiment']
             self.print_debug('\n')
         
 
