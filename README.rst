@@ -25,7 +25,8 @@ In this example we used machine learning technique to learn patterns from each l
 then we can tell if any given text is in English or Francoarab.
 
 To run the code type: python franco.py [some text here]
-::
+
+Examples:
 - python franco.py mazzika
 - python franco.py music
 - python franco.py sab3a million
