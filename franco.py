@@ -33,7 +33,7 @@ def show():
 ''' Get tokenz freuquencies
     mood: char, 2-gram, word
 '''
-def get_freq(mode='char'):
+def get_freq(mode='char', alpha_sorted=False):
     fdist = {}
     for label in text:
         fdist[label] = []
@@ -41,6 +41,7 @@ def get_freq(mode='char'):
             tokenz = [char for char in text[label]]
         if mode.endswith('gram'):
             n = int(mode.split('-')[0])
+            print n
             tokenz = [text[label][i:i+n] for i in range(len(text[label]))]
         else:
             tokenz = word_tokenize(text[label])   
@@ -48,7 +49,8 @@ def get_freq(mode='char'):
         #nltk_txt.plot()
         for char in nltk_txt.vocab().keys():
             fdist[label].append((char, nltk_txt.vocab()[char]))
-        fdist[label].sort()
+        if alpha_sorted:
+            fdist[label].sort()
     return fdist 
         
 def print_debug(message, debug=False):
@@ -67,7 +69,7 @@ def classifier(n=1):
         features = {}
         for tok in fdist.keys():
             features[tok] = fdist[tok]
-        print label, features
+        #print label, features
         featureset.append(features)
         labels.append(label)
     featureset_scikit = v.fit_transform(featureset)
@@ -119,9 +121,9 @@ if __name__ == '__main__':
         print_debug(msg, debug=DEBUG)
     print_debug('', debug=DEBUG)
     
-    fdist = get_freq(mode='1-gram')
+    txt_freqs = get_freq(mode='2-gram')
     for label in text:
-        print label, fdist[label]
+        print label, txt_freqs[label]
     
     try:
         input_text = ' '.join(sys.argv[1:])
