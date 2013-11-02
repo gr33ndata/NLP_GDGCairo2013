@@ -107,7 +107,7 @@ load()
 
 if __name__ == '__main__':
 
-    DEBUG = False
+    DEBUG = True
     
     for key in text:
         msg =  key + ' => Length: ' + str(len(text[key]))
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     print_debug('', debug=DEBUG)
     
     if DEBUG:
-        txt_freqs = get_freq(mode='2-gram')
+        txt_freqs = get_freq(mode='word')
         for label in txt_freqs:
             msg = label + str(txt_freqs[label])
             print_debug(msg, debug=DEBUG)
