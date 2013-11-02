@@ -41,7 +41,6 @@ def get_freq(mode='char', alpha_sorted=False):
             tokenz = [char for char in text[label]]
         if mode.endswith('gram'):
             n = int(mode.split('-')[0])
-            print n
             tokenz = [text[label][i:i+n] for i in range(len(text[label]))]
         else:
             tokenz = word_tokenize(text[label])   
@@ -121,9 +120,11 @@ if __name__ == '__main__':
         print_debug(msg, debug=DEBUG)
     print_debug('', debug=DEBUG)
     
-    txt_freqs = get_freq(mode='2-gram')
-    for label in text:
-        print label, txt_freqs[label]
+    if DEBUG:
+        txt_freqs = get_freq(mode='2-gram')
+        for label in txt_freqs:
+            msg = label + str(txt_freqs[label])
+            print_debug(msg, debug=DEBUG)
     
     try:
         input_text = ' '.join(sys.argv[1:])
