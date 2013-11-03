@@ -4,7 +4,7 @@ import nltk
 
 class CairoTraffic:
     
-    def __init__(self, filein='corpus/cairotraffic.txt', debug=True):
+    def __init__(self, filein='', debug=True):
         self.filein = filein
         self.debug = debug
         self.data = []
@@ -37,6 +37,41 @@ class CairoTraffic:
         if self.debug:
             print message
     
+    def unigram_tag(self, text):
+        ''' Unigram Tagger are based on a simple statistical algorithm, 
+            For each token, assign the tag that is most likely for that token.
+            It only works for tokens already seen in training set. 
+        '''
+        trainingset = []
+        for tweet in self.data:
+            trainingset.append(tweet['tokens'])
+        unigram_tagger = nltk.UnigramTagger(trainingset)
+        tokenz = re.split('\s+', text)
+        pos = unigram_tagger.tag(tokenz)
+        print pos
+        return pos
+        
+    def bigram_tag(self, text, backoff=True):
+        ''' Bigram Tagger cosider previous word too, 
+            As soon as it encounters a new word,
+            the tagger fails to tag the rest of the sentence.
+            Backoff, uses unigram taggers when bigram fails.
+            Still, problem with unseen tokens.
+        '''
+        trainingset = []
+        for tweet in self.data:
+            trainingset.append(tweet['tokens'])
+        if backoff:
+            default_tagger = nltk.DefaultTagger('NN')
+            unigram_tagger = nltk.UnigramTagger(trainingset, backoff=default_tagger)
+            bigram_tagger = nltk.BigramTagger(trainingset, backoff=unigram_tagger)
+        else:
+            bigram_tagger = nltk.BigramTagger(trainingset)
+        tokenz = re.split('\s+', text)
+        pos = bigram_tagger.tag(tokenz)
+        print pos
+        return pos
+        
     def parse_tweet(self, tweet):
         ''' Returns the following structure
             from: [],to: [],sentiment: tweet[sentiment]
@@ -66,7 +101,26 @@ class CairoTraffic:
             self.print_debug('\n')
         
 
+def demo1():
+    
+    ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    ct.show_traffic()
+    
+    print 'Unigram tagger:'
+    ct.unigram_tag('Suez to Ismailia za7ma')
+    ct.unigram_tag('Ismailia to Suez za7ma')
+    
+    print 'Bigram tagger:'
+    ct.bigram_tag('Ismailia to Suez za7ma', backoff=True)
+    ct.bigram_tag('Suez to Ismailia za7ma', backoff=True)
+    ct.bigram_tag('Alex to October za7ma', backoff=True)
+
+def demo2():
+
+    ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    
+    
 if __name__ == '__main__':
     
-    ct = CairoTraffic(debug=False)
-    ct.show_traffic()
+    demo1()
+    

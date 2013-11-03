@@ -1,0 +1,4 @@
+Cairo/FROM to/DIR Alex/TO za7ma
+Alex/FROM to/DIR Suez/TO za7ma
+Suez/FROM to/DIR Cairo/TO 7alawa
+Cairo/FROM to/DIR Ismailia/TO 7alawa
