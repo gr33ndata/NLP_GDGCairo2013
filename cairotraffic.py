@@ -18,21 +18,23 @@ class CairoTraffic:
             @tokens: a listt of tuples, (word, pos)
             @sentiment: za7ma foll etc        
         '''
-        with open(self.filein,'r') as fdin:
-            for line in fdin.readlines():
-                tagged_tokenz = []
-                tokenz = re.split('\s+', line)
-                for token in tokenz:
-                    if token.find('/') == -1:
-                        tagged_tokenz.append((token, 'NN'))
-                    else:
-                        token_txt, token_tag = token.split('/')
-                        tagged_tokenz.append((token_txt, token_tag))
-                self.data.append({
-                    'tokens': tagged_tokenz, 
-                    'sentiment': 'zeft'
-                })
-    
+        fdin = open(self.filein,'r')
+        for line in fdin.readlines():
+            tagged_tokenz = []
+            tokenz = re.split('\s+', line)
+            tokenz = [token.strip() for token in tokenz if len(token.strip()) > 1]
+            for token in tokenz:
+                if token.find('/') == -1:
+                    tagged_tokenz.append((token, 'NN'))
+                else:
+                    token_txt, token_tag = token.split('/')
+                    tagged_tokenz.append((token_txt, token_tag))
+            self.data.append({
+                'tokens': tagged_tokenz, 
+                'sentiment': 'zeft'
+            })
+        fdin.close()
+        
     def print_debug(self, message):
         if self.debug:
             print message
@@ -71,6 +73,49 @@ class CairoTraffic:
         pos = bigram_tagger.tag(tokenz)
         print pos
         return pos
+    
+    def pos_featrues(self, tweet):
+        ''' Helper function for ml_tag()
+        '''
+        tweet_featurs = []
+        #print 'Tokz::', str(tweet)
+        for i in range(len(tweet['tokens'])):
+            featurs = {}
+            featurs['word'] = tweet['tokens'][i][0].strip('#').lower()
+            featurs['hashtag'] = tweet['tokens'][i][0].startswith('#')
+            featurs['caps'] = tweet['tokens'][i][0][0].isupper()
+            try:
+                featurs['prev'] = tweet['tokens'][i-1][0].lower()
+            except:
+                featurs['prev'] = ''
+            try:
+                featurs['next'] = tweet['tokens'][i+1][0].lower()
+            except:
+                featurs['next'] = ''
+            tweet_featurs.append((featurs, tweet['tokens'][i][1]))
+        return tweet_featurs
+        
+    def ml_tag(self, text, backoff=True):
+        ''' Machine Learning Tagger cosider featureset, 
+            As soon as it encounters a new word,
+            the tagger fails to tag the rest of the sentence.
+            Backoff, uses unigram taggers when bigram fails.
+            Still, problem with unseen tokens.
+        '''
+        trainingset = []
+        for tweet in self.data:
+            trainingset = trainingset + self.pos_featrues(tweet)
+        #classifier = nltk.DecisionTreeClassifier.train(trainingset)    
+        classifier = nltk.NaiveBayesClassifier.train(trainingset)    
+        tokenz = re.split('\s+', text)
+        tokenz = [(token,'') for token in tokenz]
+        tokenz_features = self.pos_featrues({'tokens': tokenz})
+        tagged_text = []
+        for token in tokenz_features:
+            tag = classifier.classify(token[0])
+            tagged_text.append((token[0]['word'], tag))
+        print tagged_text
+        return tagged_text
         
     def parse_tweet(self, tweet):
         ''' Returns the following structure
@@ -101,26 +146,57 @@ class CairoTraffic:
             self.print_debug('\n')
         
 
+def demo0():
+
+    ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    
+    print '\nTagged Tweets'
+    ct.show_traffic()
+
 def demo1():
     
     ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
-    ct.show_traffic()
+    #ct.show_traffic()
     
-    print 'Unigram tagger:'
+    print '\nUnigram tagger:'
     ct.unigram_tag('Suez to Ismailia za7ma')
     ct.unigram_tag('Ismailia to Suez za7ma')
     
-    print 'Bigram tagger:'
-    ct.bigram_tag('Ismailia to Suez za7ma', backoff=True)
-    ct.bigram_tag('Suez to Ismailia za7ma', backoff=True)
-    ct.bigram_tag('Alex to October za7ma', backoff=True)
-
+       
 def demo2():
+    
+    ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    #ct.show_traffic()    
+    
+    print '\nBigram tagger:'
+    ct.bigram_tag('Suez to Ismailia za7ma', backoff=True)
+    ct.bigram_tag('Ismailia to Suez za7ma', backoff=True)
+    ct.bigram_tag('Cairo to October za7ma', backoff=True)
+    ct.bigram_tag('Alex towards Cairo za7ma', backoff=True) 
+
+def demo3():
+    
+    #ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    #ct.show_traffic()    
+    
+    print '\nNaive Bayes tagger:'
+    ct.ml_tag('Suez to Ismailia za7ma')
+    ct.ml_tag('Ismailia to Suez za7ma')
+    ct.ml_tag('Cairo to October za7ma')
+    ct.ml_tag('Traffic from alex towards cairo za7ma') 
+    ct.ml_tag('October bridge za7ma fashkh from Zamalek towards Down Town in the direction of Tahrir')        
+
+
+def demo4():
 
     ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
     
     
 if __name__ == '__main__':
     
+    demo0()
     demo1()
+    demo2()
+    demo3()
     
