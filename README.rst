@@ -71,6 +71,14 @@ Usage:
 - python franco.py millou7a
 
 
+Presentation Slides
+====================
+
+URL:
+
+http://tarekamr.appspot.com/slides/pynlp
+
+
 
 
 
