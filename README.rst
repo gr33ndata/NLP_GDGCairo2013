@@ -15,6 +15,40 @@ Machine learning in Python, `Scikit-Learn <http://scikit-learn.org>`_
 Examples 
 =========
 
+Google Plus
+------------
+
+In this quick demo we show NLTK capabilities, from cleaning HTML tagged text 
+to tokenization, frequency counting and collocations analysis. 
+All in addition to Python's URL handling and JSON parsing.
+
+Usage:
+
+- python gplus.py
+
+Cairo Traffic
+--------------
+
+In this demo, we want to parte tweets tagged with #CairoTraffic
+so that we can tell the following variables in each tweet:
+
+1. From: Where is the tweep going from.
+2. To: Where is the tweep going to.
+3. The traffic status being reported.
+
+We have to files in the courpus, "corpus/cairotraffic.txt", 
+and a short demo version, "corpus/cairotraffic.txt".
+We have multiple function to run in the code, demo0, demo1, demo2, etc.
+In demo0() we show the basic idea of PoS (Part of Speech) tagging.
+Then in demo1() and demo2() we use both unigram and bigram taggers respectively 
+to tag new tweets based on what is learnt from the trainig set.
+Then in demo3() and demo4() we use Machine Learning techniques for better tagging.
+Finally, in demo5() we use Machine Learning to tell traffic status from a tweet.
+
+Usage:
+
+- python cairotraffic.py
+
 Francoarab
 -----------
 
@@ -27,7 +61,7 @@ then we can tell if any given text is in English or Francoarab.
 
 To run the code type: python franco.py [some text here]
 
-Examples:
+Usage:
 
 - python franco.py mazzika
 - python franco.py music
@@ -35,6 +69,7 @@ Examples:
 - python franco.py seven million
 - python franco.py 7million
 - python franco.py millou7a
+
 
 
 
