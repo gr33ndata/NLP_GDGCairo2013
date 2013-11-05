@@ -71,9 +71,10 @@ Usage:
 - python franco.py millou7a
 
 
-Contacts and Links
-====================
-:
+Appendix
+=========
+
+Contacts and Links:
 
 - Presentation Slides: http://tarekamr.appspot.com/slides/pynlp
 - Homepage: http://tarekamr.appspot.com/slides/pynlp
