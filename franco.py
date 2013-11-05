@@ -60,6 +60,9 @@ def print_debug(message, debug=False):
         print message
             
 ''' Classify English vs Arabizi
+    Usage:
+        c = classifier(n=2)
+        predict(input_text, c)
 '''
 def classifier(n=1):
     v = DictVectorizer(sparse=False)
@@ -81,6 +84,10 @@ def classifier(n=1):
 
 ''' Convert string to featureset
     Then use scikit-learn and classifier to classify it.
+    Usage:
+        c = classifier(n=2)
+        predict(input_text, c)
+    Update: Use predict_nltk() now instead of this one.
 '''
 def predict(text='', classifier=None):
     n = classifier['n']
@@ -95,12 +102,10 @@ def predict(text='', classifier=None):
     y = nb.predict(featureset_scikit)
     print 'Class:', y[0]
     
-#import nltk
-#import arabizi
-#c = arabizi.classifier(n=2)
-#arabizi.predict('naharak zay el 3asal', c)
 
-
+''' Convert string to featureset
+    To be used by predict_nltk
+'''
 def text_features(in_text='', n=2):
     tokenz = [in_text[i:i+n] for i in range(len(in_text))]
     fdist = nltk.FreqDist(tokenz)
@@ -108,22 +113,24 @@ def text_features(in_text='', n=2):
     for tok in fdist.keys():
         features[tok] = fdist[tok]
     return features
-        
-def predict_nltk(in_text=''): 
+
+''' Text language classification
+    Then use scikit-learn classifiers from within NLTK 
+    to classify new taxt based on training set.
+'''        
+def predict_nltk(in_text='', n=2): 
     trainingset = []  
     for label in text:
         featurs = text_features(text[label])
         trainingset.append((featurs, label))
     classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
-    in_features = text_features(in_text)
+    in_features = text_features(in_text, n=n)
     lang = classifier.classify(in_features)
     print lang
     
-
                 
 load() 
 #show()   
-
 
 
 if __name__ == '__main__':
@@ -150,9 +157,7 @@ if __name__ == '__main__':
     try:
         input_text = ' '.join(sys.argv[1:])
         print 'Text:', input_text
-        #c = classifier(n=2)
-        #predict(input_text, c)
-        predict_nltk(input_text)
+        predict_nltk(input_text, n=2)
     except:
         print 'Please type some text'
         pass
