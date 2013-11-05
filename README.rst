@@ -71,12 +71,14 @@ Usage:
 - python franco.py millou7a
 
 
-Presentation Slides
+Contacts and Links
 ====================
+:
 
-URL:
-
-http://tarekamr.appspot.com/slides/pynlp
+- Presentation Slides: http://tarekamr.appspot.com/slides/pynlp
+- Homepage: http://tarekamr.appspot.com/slides/pynlp
+- Twitter: https://twitter.com/gr33ndata
+- Open Knowlege Foundation, Egypt: http://eg.okfn.org/
 
 
 
