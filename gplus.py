@@ -6,6 +6,7 @@ import nltk
 from nltk import clean_html
 
 from feedparser import _parse_date as parse_date
+from nltk.tokenize import word_tokenize, wordpunct_tokenize, sent_tokenize
 
 try:
     from googlekey import key as apikey
@@ -19,6 +20,7 @@ class GooglePlus:
 
     def __init__(self, userId='+nilefm'):
         self.userId = userId
+        self.data = []
     
     def enum_weekdays(self, dayId):
         weekdays = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
@@ -49,6 +51,7 @@ class GooglePlus:
         return "".join(i for i in s if ord(i)<128)
           
     def get_public_feed(self, out_file='', max_pages=1):
+        print 'Retrieving %s feed, %d pages left.' % (self.userId, max_pages)
         if max_pages == 0:
             return []
         ret_data = []
@@ -84,10 +87,74 @@ class GooglePlus:
                     line = '%s, %s, %s, %s\n' % (str(data_item['plusoners']), str(data_item['time']['hour']), str(data_item['time']['weekdayName']), str(data_item['content']))
                     fd_out.write(line)
             print 'Activities written to', out_file
+            self.data = ret_data
+            return ret_data
 
+    def is_valid_token(self, token):
+        if token.isalpha():
+            return True
+        elif token.startswith('#') and token[1:].isalpha():
+            return True
+            
+    def analyze(self, plusoners_threshold=3, out_file=''):
+        ''' Analyses the Google+ of userId
+            Generates words collocations
+            And top N tokens, wrt their frequencies.
+            @plusoners_threshold: First of all, we split updats
+                Those below certain plusone threshold,
+                and those above or equals to it
+            @out_file: if given, output will be printed to it
+                Otherwise, it will be printed on screen
+        '''
+        text = {
+            'above threshold': {'text': '', 'n': 0, 'd3': []}, 
+            'below threshold': {'text': '', 'n': 0, 'd3': []} 
+        }
+        for item in self.data:
+            if int(item['plusoners']) < 3:
+                text['below threshold']['text'] += item['content']
+                text['below threshold']['n'] += 1
+            else:
+                text['above threshold']['text'] += item['content']
+                text['above threshold']['n'] += 1
+        
+        if out_file:
+            fd = open(out_file, 'w')   
+            STDOUT  = sys.stdout
+            sys.stdout = fd     
+            
+        for label in text:
+            print '\n', label.title()
+            print 'Loaded updates:', text[label]['n']
+            tokenz = wordpunct_tokenize(text[label]['text'])
+            tokenz = [token for token in tokenz if self.is_valid_token(token)]
+            txt = nltk.Text(tokenz)
+            print 'Top 10 collecated tokens:' 
+            txt.collocations(num=10, window_size=2)
+            print 'Top 50 tokens:'
+            for word in txt.vocab().keys()[0:50]:
+                print word, ':', txt.vocab()[word]
+                text[label]['d3'].append(["\"" + word + "\"", txt.vocab()[word]])
+            print '\n'
+            
+        if out_file:
+            fd.close()  
+            sys.stdout = STDOUT  
+            
+        for label in text:
+            print label
+            print text[label]['d3']
+                       
+        # Returns text so we can play with it.
+        return text
             
 if __name__ == '__main__':
 
-    gplus = GooglePlus(userId='+nilefm')
+    gplus_Id = '+GDGCairoOrg'
+    gplus = GooglePlus(userId=gplus_Id)
     #print gplus.parse_rfc3339_date('1937-01-01T03:00:27.87+02:00')
-    gplus.get_public_feed(out_file='corpus/nilefm.csv', max_pages=20)
+    out_file = 'corpus/%s.csv' % gplus_Id[1:]
+    gplus.get_public_feed(out_file=out_file, max_pages=20)
+    out_file = 'corpus/%s_analysis.txt' % gplus_Id[1:]
+    gplus.analyze(out_file=out_file, plusoners_threshold=3)
+    
