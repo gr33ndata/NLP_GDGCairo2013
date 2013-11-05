@@ -1,9 +1,12 @@
 import sys
 import nltk
+
 from nltk.tokenize import word_tokenize, wordpunct_tokenize, sent_tokenize
 
+from nltk.classify import SklearnClassifier
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
+
 
 text = {}
 
@@ -92,12 +95,30 @@ def predict(text='', classifier=None):
     y = nb.predict(featureset_scikit)
     print 'Class:', y[0]
     
-    
-
 #import nltk
 #import arabizi
 #c = arabizi.classifier(n=2)
 #arabizi.predict('naharak zay el 3asal', c)
+
+
+def text_features(in_text='', n=2):
+    tokenz = [in_text[i:i+n] for i in range(len(in_text))]
+    fdist = nltk.FreqDist(tokenz)
+    features = {}
+    for tok in fdist.keys():
+        features[tok] = fdist[tok]
+    return features
+        
+def predict_nltk(in_text=''): 
+    trainingset = []  
+    for label in text:
+        featurs = text_features(text[label])
+        trainingset.append((featurs, label))
+    classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
+    in_features = text_features(in_text)
+    lang = classifier.classify(in_features)
+    print lang
+    
 
                 
 load() 
@@ -107,7 +128,7 @@ load()
 
 if __name__ == '__main__':
 
-    DEBUG = True
+    DEBUG = False
     
     for key in text:
         msg =  key + ' => Length: ' + str(len(text[key]))
@@ -129,8 +150,9 @@ if __name__ == '__main__':
     try:
         input_text = ' '.join(sys.argv[1:])
         print 'Text:', input_text
-        c = classifier(n=2)
-        predict(input_text, c)
+        #c = classifier(n=2)
+        #predict(input_text, c)
+        predict_nltk(input_text)
     except:
         print 'Please type some text'
         pass

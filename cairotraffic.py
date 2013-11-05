@@ -2,6 +2,9 @@ import sys
 import re
 import nltk
 
+from nltk.classify import SklearnClassifier
+from sklearn.naive_bayes import MultinomialNB
+
 class CairoTraffic:
     
     def __init__(self, filein='', debug=True):
@@ -21,7 +24,8 @@ class CairoTraffic:
         fdin = open(self.filein,'r')
         for line in fdin.readlines():
             tagged_tokenz = []
-            tokenz = re.split('\s+', line)
+            line_text, line_text_sentiment = line.rsplit(':', 1) 
+            tokenz = re.split('\s+', line_text.strip())
             tokenz = [token.strip() for token in tokenz if len(token.strip()) > 1]
             for token in tokenz:
                 if token.find('/') == -1:
@@ -31,7 +35,7 @@ class CairoTraffic:
                     tagged_tokenz.append((token_txt, token_tag))
             self.data.append({
                 'tokens': tagged_tokenz, 
-                'sentiment': 'zeft'
+                'sentiment': line_text_sentiment.strip()
             })
         fdin.close()
         
@@ -95,12 +99,8 @@ class CairoTraffic:
             tweet_featurs.append((featurs, tweet['tokens'][i][1]))
         return tweet_featurs
         
-    def ml_tag(self, text, backoff=True):
+    def ml_tag(self, text, backoff=True, print_tags=True):
         ''' Machine Learning Tagger cosider featureset, 
-            As soon as it encounters a new word,
-            the tagger fails to tag the rest of the sentence.
-            Backoff, uses unigram taggers when bigram fails.
-            Still, problem with unseen tokens.
         '''
         trainingset = []
         for tweet in self.data:
@@ -114,9 +114,45 @@ class CairoTraffic:
         for token in tokenz_features:
             tag = classifier.classify(token[0])
             tagged_text.append((token[0]['word'], tag))
-        print tagged_text
+        if print_tags:
+            print tagged_text
         return tagged_text
+    
+    def sentiment_featrues(self, tweet):
+        tweet_featurs = {}
+        tweet_sentiment = tweet['sentiment']
+        for token in tweet['tokens']:
+            if token[1] == 'NN' or token[1] == 'DIR':
+                token_text = token[0].lower().strip('#')
+                if tweet_featurs.get(token_text, 0):
+                    tweet_featurs[token_text] += 1
+                else:
+                    tweet_featurs[token_text] = 1     
+            else:
+                pass
+        return (tweet_featurs, tweet_sentiment)            
         
+    def ml_sentiment(self, text):
+        trainingset = []
+        for tweet in self.data:
+            trainingset.append(self.sentiment_featrues(tweet))
+        #classifier = nltk.NaiveBayesClassifier.train(trainingset)
+        classifier = nltk.DecisionTreeClassifier.train(trainingset)
+        #classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
+        tokenz = self.ml_tag(text, print_tags=False)
+        tweet = {
+            'tokens': tokenz,
+            'sentiment': ''
+        } 
+        tokenz_features = self.sentiment_featrues(tweet)
+        #print tokenz_features
+        sentiment = classifier.classify(tokenz_features[0])
+        #print text, sentiment
+        tweet['sentiment'] = sentiment
+        print '\nTweet:', text
+        self.show_tweet(tweet)
+        return sentiment
+                    
     def parse_tweet(self, tweet):
         ''' Returns the following structure
             from: [],to: [],sentiment: tweet[sentiment]
@@ -144,7 +180,12 @@ class CairoTraffic:
             traffic_tweet = self.parse_tweet(tweet)
             print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', traffic_tweet['sentiment']
             self.print_debug('\n')
-        
+    
+    def show_tweet(self, tweet):
+        self.print_debug('\nTweet:\n')   
+        traffic_tweet = self.parse_tweet(tweet)
+        print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', traffic_tweet['sentiment']
+        self.print_debug('\n')    
 
 def demo0():
 
@@ -176,22 +217,40 @@ def demo2():
 
 def demo3():
     
-    #ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
-    ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    #ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
     #ct.show_traffic()    
     
     print '\nNaive Bayes tagger:'
     ct.ml_tag('Suez to Ismailia za7ma')
     ct.ml_tag('Ismailia to Suez za7ma')
     ct.ml_tag('Cairo to October za7ma')
-    ct.ml_tag('Traffic from alex towards cairo za7ma') 
+    ct.ml_tag('Road to Suez from Alex 7alawa')
+     
+           
+def demo4():
+    
+    #ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
+    ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    #ct.show_traffic()    
+    
+    print '\nNaive Bayes tagger:'
+    ct.ml_tag('Naharak sa3eed, Ring Road from Ba7r A3zam to Maadi looz el 3enab')
+    ct.ml_tag('Maznoo2 3al me7war, fuck #CairoTraffic')
+    ct.ml_tag('Any news about road from Cairo to Sokhna')
+    ct.ml_tag('Zamalek is one huge parking area, avoid October bridge') 
     ct.ml_tag('October bridge za7ma fashkh from Zamalek towards Down Town in the direction of Tahrir')        
 
 
-def demo4():
+def demo5():
 
-    ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    #ct = CairoTraffic(filein='corpus/cairotraffic.txt', debug=False)
+    ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
     
+    print '\nNaive Bayes Sentiments:'
+    ct.ml_sentiment('el kobry from Zamalek to Kasr El Nil za7ma fashk')
+    ct.ml_sentiment('October entrance from Ramsis towards Ghamra looz el 3enab')
+    ct.ml_sentiment('avoid October bridge in direction of Down Twon blocked')
     
 if __name__ == '__main__':
     
@@ -199,4 +258,6 @@ if __name__ == '__main__':
     demo1()
     demo2()
     demo3()
+    demo4()
+    demo5()
     
