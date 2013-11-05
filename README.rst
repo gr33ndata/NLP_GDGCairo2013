@@ -77,7 +77,7 @@ Appendix
 Contacts and Links:
 
 - Presentation Slides: http://tarekamr.appspot.com/slides/pynlp
-- Homepage: http://tarekamr.appspot.com/slides/pynlp
+- Homepage: http://tarekamr.appspot.com/
 - Twitter: https://twitter.com/gr33ndata
 - Open Knowlege Foundation, Egypt: http://eg.okfn.org/
 
