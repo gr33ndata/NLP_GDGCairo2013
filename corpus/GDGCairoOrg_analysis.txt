@@ -1,0 +1,124 @@
+
+Below Threshold
+Loaded updates: 1140
+Top 10 collecated tokens:
+Building collocations list
+http goo; google cloud; developer challenge; cloud developer; gcdc
+gcdcwisdom; app engine; play games; user therahmanoloritun; charles
+chen; questions via
+Top 50 tokens:
+Building vocabulary index...
+and : 1820
+google : 1720
+the : 1680
+to : 1120
+for : 1040
+a : 1020
+http : 960
+of : 960
+on : 840
+in : 740
+cloud : 680
+you : 660
+is : 600
+gl : 540
+goo : 540
+com : 520
+with : 520
+android : 480
+this : 440
+cairo : 360
+developer : 340
+will : 340
+your : 340
+are : 300
+at : 300
+gcdc : 300
+by : 280
+we : 280
+about : 260
+be : 260
+day : 260
+developers : 260
+s : 260
+youtube : 260
+devfest : 240
+hangout : 240
+more : 240
+www : 240
+as : 220
+challenge : 220
+gdg : 220
+new : 220
+platform : 220
+all : 200
+have : 200
+he : 200
+quot : 200
+software : 200
+using : 200
+get : 180
+
+
+
+Above Threshold
+Loaded updates: 860
+Top 10 collecated tokens:
+Building collocations list
+http goo; developer challenge; google cloud; cloud developer; image
+source; haitham nabil; play games; security camp; anas emad;
+googlecloudplatform blogspot
+Top 50 tokens:
+Building vocabulary index...
+and : 1280
+to : 1240
+the : 1160
+you : 780
+of : 660
+in : 640
+for : 620
+google : 480
+a : 460
+is : 440
+gdgcairo : 400
+your : 400
+devfest : 340
+http : 340
+we : 320
+all : 300
+gdg : 280
+on : 280
+will : 280
+with : 280
+cairo : 260
+cloud : 260
+it : 240
+about : 220
+com : 220
+more : 220
+that : 220
+android : 200
+are : 200
+be : 200
+event : 200
+gcdc : 200
+gl : 200
+goo : 200
+information : 200
+new : 200
+day : 180
+now : 180
+our : 180
+pm : 180
+share : 180
+weekend : 180
+developer : 160
+first : 160
+knowledge : 160
+software : 160
+this : 160
+challenge : 140
+he : 140
+python : 140
+
+
