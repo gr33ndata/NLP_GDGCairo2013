@@ -250,7 +250,8 @@ def demo5():
     print '\nNaive Bayes Sentiments:'
     ct.ml_sentiment('el kobry from Zamalek to Kasr El Nil za7ma fashkh')
     ct.ml_sentiment('October entrance from Ramsis towards Ghamra looz el 3enab')
-    ct.ml_sentiment('avoid October bridge in direction of Down Twon blocked')
+    ct.ml_sentiment('avoid October bridge in direction of Down Town blocked')
+    ct.ml_sentiment('el donya za7ma akher 7aga in Tahrir towards Ghamra')
     
     
 if __name__ == '__main__':
@@ -259,5 +260,5 @@ if __name__ == '__main__':
     #demo1()
     #demo2()
     #demo3()
-    demo5()
+    #demo5()
     
