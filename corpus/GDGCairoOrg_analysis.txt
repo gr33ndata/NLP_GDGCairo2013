@@ -1,89 +1,89 @@
 
 Below Threshold
-Loaded updates: 1140
+Loaded updates: 1134
 Top 10 collecated tokens:
 Building collocations list
 http goo; google cloud; developer challenge; cloud developer; gcdc
 gcdcwisdom; app engine; play games; user therahmanoloritun; charles
-chen; questions via
+chen; blogspot com
 Top 50 tokens:
 Building vocabulary index...
-and : 1820
-google : 1720
-the : 1680
-to : 1120
-for : 1040
-a : 1020
-http : 960
-of : 960
-on : 840
+and : 1794
+google : 1696
+the : 1658
+to : 1104
+for : 1022
+a : 1010
+of : 954
+http : 952
+on : 818
 in : 740
-cloud : 680
-you : 660
-is : 600
-gl : 540
-goo : 540
-com : 520
-with : 520
-android : 480
-this : 440
+cloud : 676
+you : 644
+is : 594
+gl : 538
+goo : 538
+com : 514
+with : 504
+android : 464
+this : 438
 cairo : 360
-developer : 340
-will : 340
-your : 340
-are : 300
-at : 300
-gcdc : 300
+developer : 336
+will : 334
+your : 332
+are : 298
+gcdc : 296
+at : 290
 by : 280
 we : 280
-about : 260
-be : 260
 day : 260
-developers : 260
 s : 260
-youtube : 260
+developers : 258
+about : 256
+be : 256
+youtube : 256
 devfest : 240
-hangout : 240
 more : 240
-www : 240
-as : 220
+www : 238
+hangout : 234
 challenge : 220
 gdg : 220
-new : 220
-platform : 220
+as : 218
+new : 218
+platform : 216
 all : 200
 have : 200
-he : 200
-quot : 200
 software : 200
-using : 200
-get : 180
+he : 196
+using : 194
+quot : 188
+here : 180
 
 
 
 Above Threshold
-Loaded updates: 860
+Loaded updates: 866
 Top 10 collecated tokens:
 Building collocations list
 http goo; developer challenge; google cloud; cloud developer; image
-source; haitham nabil; play games; security camp; anas emad;
-googlecloudplatform blogspot
+source; haitham nabil; play games; security camp; google com; anas
+emad
 Top 50 tokens:
 Building vocabulary index...
-and : 1280
-to : 1240
+and : 1292
+to : 1246
 the : 1160
 you : 780
 of : 660
 in : 640
 for : 620
-google : 480
+google : 486
 a : 460
-is : 440
+is : 446
 gdgcairo : 400
 your : 400
+http : 346
 devfest : 340
-http : 340
 we : 320
 all : 300
 gdg : 280
@@ -93,9 +93,9 @@ with : 280
 cairo : 260
 cloud : 260
 it : 240
-about : 220
-com : 220
-more : 220
+com : 232
+about : 226
+more : 226
 that : 220
 android : 200
 are : 200
@@ -117,8 +117,8 @@ first : 160
 knowledge : 160
 software : 160
 this : 160
+quot : 144
 challenge : 140
 he : 140
-python : 140
 
 

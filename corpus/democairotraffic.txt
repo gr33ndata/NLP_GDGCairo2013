@@ -1,6 +1,6 @@
 Cairo/FROM to/DIR Alex/TO blocked fashkh : za7ma
 Alex/FROM to/DIR Cairo/TO akher 7alawa : 7alawa
-Suez/FROM to/DIR Cairo/TO 7alawa : 7alawa
+Suez/FROM to/DIR Cairo/TO 3enab : 7alawa
 The road from/DIR Cairo/FROM and to/DIR Suez/TO Za7ma : za7ma
 Traffic from/DIR Cairo/FROM za7ma to/DIR Ismailia/TO : za7ma
 Ismailia/FROM towards/DIR Cairo/TO blocked : za7ma
