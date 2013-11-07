@@ -70,6 +70,21 @@ Usage:
 - python franco.py 7million
 - python franco.py millou7a
 
+Wiki Analysis
+--------------
+
+In this example we grab the Wikipedia pages of Egypt, Tunisia and Lebanon, 
+in order to compare them to each other. However, you can edit the following line:
+
+- topics = ['Egypt', 'Tunisia', 'Lebanon']
+
+To grab and analyse different pages instead.
+The output data is dumped into a CSV file. 
+
+Usage:
+
+- python wikianalysis.py
+
 
 Appendix
 =========
@@ -80,10 +95,4 @@ Contacts and Links:
 - Homepage: http://tarekamr.appspot.com/
 - Twitter: https://twitter.com/gr33ndata
 - Open Knowlege Foundation, Egypt: http://eg.okfn.org/
-
-
-
-
-
-
 
