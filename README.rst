@@ -78,6 +78,9 @@ To work with it from within the python shell:
 
 - from gnugpl import GPL
 - g = GPL()
+- g.text 
+- print g
+- g.normalized_text() 
 - g.top(10)
 - t = g.Text()
 - t.plot()
