@@ -137,8 +137,8 @@ class CairoTraffic:
         for tweet in self.data:
             trainingset.append(self.sentiment_featrues(tweet))
         #classifier = nltk.NaiveBayesClassifier.train(trainingset)
-        classifier = nltk.DecisionTreeClassifier.train(trainingset)
-        #classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
+        #classifier = nltk.DecisionTreeClassifier.train(trainingset)
+        classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
         tokenz = self.ml_tag(text, print_tags=False)
         tweet = {
             'tokens': tokenz,
@@ -248,16 +248,16 @@ def demo5():
     ct = CairoTraffic(filein='corpus/democairotraffic.txt', debug=False)
     
     print '\nNaive Bayes Sentiments:'
-    ct.ml_sentiment('el kobry from Zamalek to Kasr El Nil za7ma fashk')
+    ct.ml_sentiment('el kobry from Zamalek to Kasr El Nil za7ma fashkh')
     ct.ml_sentiment('October entrance from Ramsis towards Ghamra looz el 3enab')
     ct.ml_sentiment('avoid October bridge in direction of Down Twon blocked')
+    
     
 if __name__ == '__main__':
     
     demo0()
-    demo1()
-    demo2()
-    demo3()
-    demo4()
+    #demo1()
+    #demo2()
+    #demo3()
     demo5()
     

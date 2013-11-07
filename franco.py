@@ -126,7 +126,7 @@ def predict_nltk(in_text='', n=2):
     classifier = SklearnClassifier(MultinomialNB()).train(trainingset)
     in_features = text_features(in_text, n=n)
     lang = classifier.classify(in_features)
-    print lang
+    print 'Language:', lang
     
                 
 load() 
