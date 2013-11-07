@@ -79,6 +79,7 @@ in order to compare them to each other. However, you can edit the following line
 - topics = ['Egypt', 'Tunisia', 'Lebanon']
 
 To grab and analyse different pages instead.
+
 The output data is dumped into a CSV file. 
 
 Usage:
