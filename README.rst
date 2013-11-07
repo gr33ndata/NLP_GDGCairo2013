@@ -70,6 +70,19 @@ Usage:
 - python franco.py 7million
 - python franco.py millou7a
 
+GNU GPL
+--------
+
+This script contains the GPL license.
+To work with it from within the python shell:
+
+- from gnugpl import GPL
+- g = GPL()
+- g.top(10)
+- t = g.Text()
+- t.plot()
+- t.collocations()
+
 Wiki Analysis
 --------------
 
