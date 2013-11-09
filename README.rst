@@ -8,9 +8,9 @@ Prerequisites
 
 Before running the code here, you need to make sure you have the following libraries installed, after making sure that you already have the `Python programming language <http://www.python.org/>`_ installed on your computer::
 
-Natural Language Toolkit, `NLTK <http://nltk.org/>`_ 
+Natural Language Toolkit, `NLTK <http://nltk.org/>`_ (Required for all demos)
 
-Machine learning in Python, `Scikit-Learn <http://scikit-learn.org>`_ (Required for Cairo Traffic and Francoarab apps)
+Machine learning in Python, `Scikit-Learn <http://scikit-learn.org>`_ (Required for Cairo Traffic and Francoarab demos)
 
 Examples 
 =========
