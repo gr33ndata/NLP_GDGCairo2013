@@ -80,6 +80,14 @@ class CairoTraffic:
     
     def pos_featrues(self, tweet):
         ''' Helper function for ml_tag()
+            This is used to extract features from tokens
+            In our case, we extract:
+            - the word itself lowercased
+            - the previous word
+            - the next word
+            - whether our word is a hashtag
+            - whether our word is starts with capitals
+            - P.S. Feel free to think of more features!
         '''
         tweet_featurs = []
         #print 'Tokz::', str(tweet)
@@ -100,7 +108,7 @@ class CairoTraffic:
         return tweet_featurs
         
     def ml_tag(self, text, backoff=True, print_tags=True):
-        ''' Machine Learning Tagger cosider featureset, 
+        ''' Machine Learning Tagger considering featureset, 
         '''
         trainingset = []
         for tweet in self.data:
@@ -119,6 +127,11 @@ class CairoTraffic:
         return tagged_text
     
     def sentiment_featrues(self, tweet):
+        ''' Helper function for ml_sentiment()
+            This is used to extract features from tokens
+            In our case, we extract:
+            - the word itself lowercased without hashtag
+        '''
         tweet_featurs = {}
         tweet_sentiment = tweet['sentiment']
         for token in tweet['tokens']:
@@ -133,6 +146,8 @@ class CairoTraffic:
         return (tweet_featurs, tweet_sentiment)            
         
     def ml_sentiment(self, text):
+        ''' Machine Learning for Sentiment detection.
+        '''
         trainingset = []
         for tweet in self.data:
             trainingset.append(self.sentiment_featrues(tweet))
@@ -182,6 +197,8 @@ class CairoTraffic:
             self.print_debug('\n')
     
     def show_tweet(self, tweet):
+        ''' Displays a tweet in the form of From => To and Status
+        '''
         self.print_debug('\nTweet:\n')   
         traffic_tweet = self.parse_tweet(tweet)
         print ' '.join(traffic_tweet['from']), '=>', ' '.join(traffic_tweet['to']), ' STATUS:', traffic_tweet['sentiment']
