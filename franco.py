@@ -10,10 +10,11 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB
 
 text = {}
 
-''' Load data from arabizi.txt
-    Then put data as key & value in text
-'''
+
 def load(filename='corpus/franco.txt'):
+    ''' Load data from arabizi.txt
+        Then put data as key & value in text
+    '''
     fd = open(filename)
     for line in fd.readlines():
         try:
@@ -23,20 +24,23 @@ def load(filename='corpus/franco.txt'):
             pass
 
 
-''' Displays data loaded from arabizi.txt
-    Data is put as key & value pairs in text
-'''
+
 def show():
+    ''' Displays data loaded from arabizi.txt
+        Data is put as key & value pairs in text
+    '''
     for key in text:
         print key + ':' + text[key][0:100] + '... (Length: ' + str(len(text[key])) + ' characters)'
         words = wordpunct_tokenize(text[key])
         print key + ':' + ','.join(words[0:100]) + '... (Length: ' + str(len(words)) + ' words)'
     print '\n'
 
-''' Get tokenz freuquencies
-    mood: char, 2-gram, word
-'''
+
+
 def get_freq(mode='char', alpha_sorted=False):
+    ''' Get tokenz freuquencies
+        mood: char, 2-gram, word
+    '''
     fdist = {}
     for label in text:
         fdist[label] = []
@@ -59,12 +63,14 @@ def print_debug(message, debug=False):
     if debug:
         print message
             
-''' Classify English vs Arabizi
-    Usage:
-        c = classifier(n=2)
-        predict(input_text, c)
-'''
+
 def classifier(n=1):
+    ''' Classify English vs Arabizi
+        Usage:
+            c = classifier(n=2)
+            predict(input_text, c)
+        Update: We now use predict_nltk(), ignore this method.
+    '''
     v = DictVectorizer(sparse=False)
     featureset = []
     labels = []
@@ -82,14 +88,15 @@ def classifier(n=1):
     nb.fit(featureset_scikit, labels)
     return {'learner': nb, 'vectorizer': v, 'n': n}
 
-''' Convert string to featureset
-    Then use scikit-learn and classifier to classify it.
-    Usage:
-        c = classifier(n=2)
-        predict(input_text, c)
-    Update: Use predict_nltk() now instead of this one.
-'''
+
 def predict(text='', classifier=None):
+    ''' Convert string to featureset
+        Then use scikit-learn and classifier to classify it.
+        Usage:
+            c = classifier(n=2)
+            predict(input_text, c)
+        Update: We now use predict_nltk(), ignore this method.
+    '''
     n = classifier['n']
     v = classifier['vectorizer']
     nb = classifier['learner']
@@ -103,10 +110,11 @@ def predict(text='', classifier=None):
     print 'Class:', y[0]
     
 
-''' Convert string to featureset
-    To be used by predict_nltk
-'''
+
 def text_features(in_text='', n=2):
+    ''' Convert string to featureset
+        To be used by predict_nltk
+    '''
     tokenz = [in_text[i:i+n] for i in range(len(in_text))]
     fdist = nltk.FreqDist(tokenz)
     features = {}
@@ -114,11 +122,12 @@ def text_features(in_text='', n=2):
         features[tok] = fdist[tok]
     return features
 
-''' Text language classification
-    Then use scikit-learn classifiers from within NLTK 
-    to classify new taxt based on training set.
-'''        
+        
 def predict_nltk(in_text='', n=2): 
+    ''' Text language classification
+        Then use scikit-learn classifiers from within NLTK 
+        to classify new taxt based on training set.
+    '''
     trainingset = []  
     for label in text:
         featurs = text_features(text[label])
@@ -129,25 +138,30 @@ def predict_nltk(in_text='', n=2):
     print 'Language:', lang
     
                 
-load() 
-#show()   
+   
 
 
 if __name__ == '__main__':
 
+    load()
+    #show()
+    
     DEBUG = False
     
+    # This is for debugging purpose only
     for key in text:
         msg =  key + ' => Length: ' + str(len(text[key]))
         print_debug(msg, debug=DEBUG)
     print ''
     
+    # This is for debugging purpose only
     for key in text:
         lex_richness = float( len(text[key])) / len(set(text[key]) )
         msg = key + ' => Lexical richness: ' + str(lex_richness)
         print_debug(msg, debug=DEBUG)
     print_debug('', debug=DEBUG)
     
+    # This is for debugging purpose only
     if DEBUG:
         txt_freqs = get_freq(mode='word')
         for label in txt_freqs:
