@@ -10,7 +10,7 @@ Before running the code here, you need to make sure you have the following libra
 
 Natural Language Toolkit, `NLTK <http://nltk.org/>`_ 
 
-Machine learning in Python, `Scikit-Learn <http://scikit-learn.org>`_
+Machine learning in Python, `Scikit-Learn <http://scikit-learn.org>`_ (Required for Cairo Traffic and Francoarab apps)
 
 Examples 
 =========
