@@ -2,6 +2,7 @@ import sys
 import re
 import nltk
 
+# To use Scikit-learn from within NLTK
 from nltk.classify import SklearnClassifier
 from sklearn.naive_bayes import MultinomialNB
 
@@ -273,9 +274,9 @@ def demo5():
     
 if __name__ == '__main__':
     
-    demo0()
+    #demo0()
     #demo1()
     #demo2()
     #demo3()
-    #demo5()
+    demo5()
     

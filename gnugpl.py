@@ -39,8 +39,8 @@ class GPL:
                
     def top(self, n=20):
         t = self.Text()
-        for word in t.vocab().keys()[0:n]:
-            print word, t.vocab()[word]    
+        for word, count in t.vocab().items()[0:n]:
+            print word, count    
         
 if __name__ == '__main__':  
 

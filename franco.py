@@ -1,14 +1,21 @@
 import sys
 import nltk
 
+# Some of NLTK tokenization methods
 from nltk.tokenize import word_tokenize, wordpunct_tokenize, sent_tokenize
 
+# To use Scikit-learn from within NLTK
 from nltk.classify import SklearnClassifier
-from sklearn.feature_extraction import DictVectorizer
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
 
+# Ignore this for now, we use it in case of barebone Scikit-learn.
+from sklearn.feature_extraction import DictVectorizer
 
+
+# Global object to store our data.
+# It should contain two keys: English and Francoarab
 text = {}
+
 
 
 def load(filename='corpus/franco.txt'):
