@@ -60,10 +60,22 @@ class GPL:
         
 if __name__ == '__main__':  
 
+    # Loads text data from file
     gpl = GPL()
+    
+    # Print tokenized text
     print gpl.tokenz()
-    gpl.top(50) 
+    
+    # Print loaded text
     print gpl.text
     print gpl.normalized_text()   
     print gpl
-    print gpl['the'] 
+    
+    # Print the 50 most frequent words
+    gpl.top(50) 
+    
+    # Print the frequency of the word "the"
+    print gpl['the']
+    
+    # Shows words that frequently appear together 
+    gpl.Text().collocations(window_size=5) 
