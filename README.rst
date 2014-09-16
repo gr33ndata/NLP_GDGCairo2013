@@ -29,16 +29,16 @@ Usage:
 Cairo Traffic
 --------------
 
-In this demo, we want to parte tweets tagged with #CairoTraffic
+In this demo, we want to parse tweets tagged with #CairoTraffic
 so that we can tell the following variables in each tweet:
 
 1. From: Where is the tweep going from.
 2. To: Where is the tweep going to.
 3. The traffic status being reported.
 
-We have to files in the courpus, "corpus/cairotraffic.txt", 
+We have two files in the courpus, "corpus/cairotraffic.txt", 
 and a short demo version, "corpus/cairotraffic.txt".
-We have multiple function to run in the code, demo0, demo1, demo2, etc.
+We have multiple functions to run in the code, demo0, demo1, demo2, etc.
 In demo0() we show the basic idea of PoS (Part of Speech) tagging.
 Then in demo1() and demo2() we use both unigram and bigram taggers respectively 
 to tag new tweets based on what is learnt from the trainig set.
